@@ -1,4 +1,2 @@
-j-zeromq
-========
+Watch this space for zeromq hooks into J
 
-j-zeromq
