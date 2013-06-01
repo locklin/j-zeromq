@@ -13,3 +13,7 @@ envelope labels to be more than one character long.
 The Right Way to use this is to pull it into a namespace to protect the user from raw pointers.
 I'll eventually include a couple of examples.
 
+I added a fake "ticker plant" consisting of sending arrays of ints through a pub-sub pattern.
+I'll eventually get around to figuring out how to send boxed structures, but ints (or doubles, 
+which I haven't tested yet) should solve most of the problems I am presently confronted with.
+

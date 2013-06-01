@@ -20,6 +20,43 @@ NB. TBD, if needed
 NB. struct buffer allocator? 
 NB. most of the details of sending things via zeromq is best done within zmq
 
+NB. for use in envelopes; telling what to allocate, what kind, and what shape
+arraykind =: 3 : 0
+ <. (7!:5 <'y'),(3!:0 y), ($ y) NB. need the floor, as 7!:5 returns a float... weird
+)
+
+
+NB. this gets the data over the wire for arrays
+serialize=: 3 : 0
+ kind=. 3!:0 y
+ if. kind=2 do.
+    out=. ,y
+ elseif. kind=4 do.
+    out=. 3 ic ,y
+ elseif. kind=8 do.
+    out=. 2 fc ,y
+ elseif. kind=16 do.
+ end.
+ out
+)
+
+NB. return the deserialized object; put sk in x position
+deserialize=: 4 : 0
+ sk =. (I. 0 i. x) { x NB. remove trailing zeros
+ kind=. 1 pick sk
+ shape =. }.}.sk
+ if. kind=2 do.
+    out=. y
+ elseif. kind=4 do.
+    out=. _3 ic y
+ elseif. kind=8 do.
+    out=. _2 fc y
+ elseif. kind=16 do.
+ end.
+ shape $ out
+)
+
+
 NB. actual ZeroMQ hooks below
 
 3 : 0''
@@ -102,12 +139,13 @@ zmq_getsockopt=: 3 : 0
  0 pick cmd cd sock;kind;optval;len
 )
 
+
 NB. int zmq_recv (void *s, void *buf, size_t len, int flags);
 zmq_recv =: 3 : 0
  'sock buff flag'=.y	
  size=. 7!:5 < 'buff' 
  cmd=. ZMQ,' zmq_recv i i * i i'
- 0 pick cmd cd sock;buff;size;flag
+ 2 pick cmd cd sock;buff;size;flag
 )
 
 NB. int zmq_send (void *s, const void *buf, size_t len, int flags);
@@ -186,6 +224,7 @@ sockopt=: 3 : 0
  key =. < y
  > (SOCKOPTNAMES i. key) { SOCKOPTS
 )
+
 
 NB. do these some other time...
 NB. /*  Message options                                                           */
