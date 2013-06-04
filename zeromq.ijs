@@ -217,8 +217,8 @@ NB. #define ZMQ_TCP_KEEPALIVE_INTVL 37
 NB. #define ZMQ_TCP_ACCEPT_FILTER 38
 NB. #define ZMQ_DELAY_ATTACH_ON_CONNECT 39
 NB. #define ZMQ_XPUB_VERBOSE 40
-SOCKOPTS=: 4;5;6;7;8;9;11;12;13;14;15;16;17;18;19;21;22;23;24;25;27;28;31;32;33;34;35;36;37;38;39;40
-SOCKOPTNAMES=:'affinity';'identity';'subscribe';'unsubscribe';'rate';'recovery_ivl';'sndbuf';'rcvbuf';'rcvmore';'fd';'events';'type';'linger';'reconnect_ivl';'backlog';'reconnect_ivl_max';'maxmsgsize';'sndhwm';'rcvhwm';'multicast_hops';'rcvtimeo';'sndtimeo';'ipv4only';'last_endpoint';'router_mandatory';'tcp_keepalive';'tcp_keepalive_cnt';'tcp_keepalive_idle';'tcp_keepalive_intvl';'tcp_accept_filter';'delay_attach_on_connect';'xpub_verbose'
+SOCKOPTS=: 1;2;4;5;6;7;8;9;11;12;13;14;15;16;17;18;19;21;22;23;24;25;27;28;31;32;33;34;35;36;37;38;39;40
+SOCKOPTNAMES=:'dontwait';'sndmore';'affinity';'identity';'subscribe';'unsubscribe';'rate';'recovery_ivl';'sndbuf';'rcvbuf';'rcvmore';'fd';'events';'type';'linger';'reconnect_ivl';'backlog';'reconnect_ivl_max';'maxmsgsize';'sndhwm';'rcvhwm';'multicast_hops';'rcvtimeo';'sndtimeo';'ipv4only';'last_endpoint';'router_mandatory';'tcp_keepalive';'tcp_keepalive_cnt';'tcp_keepalive_idle';'tcp_keepalive_intvl';'tcp_accept_filter';'delay_attach_on_connect';'xpub_verbose'
 
 sockopt=: 3 : 0
  key =. < y
