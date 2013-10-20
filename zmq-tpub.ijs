@@ -6,19 +6,24 @@ zmq_bind publisher;'tcp://*:6666'
 
 
 
+
+floatrand=: ?@$ % ] - 1:
+
 tickerplant=: 3 : 0
 while. 1 do. 
- goodmsg=. ((?100), 10) $ (? 1 2 3) NB.  10 100 $ i.1000 NB. ((1 ? 100),10) $ i.11
- envelope=. arraykind goodmsg NB. type, dimensions
- zmq_send publisher;'type';(sockopt 'sndmore')
- zmq_send publisher; (serialize envelope);0 
- zmq_send publisher;'array';(sockopt 'sndmore')
- zmq_send publisher; (serialize goodmsg);0
- 6!:3 (1.5)
- smoutput 'sent messages'
+ goodmsg=. (10 2 $ 20 floatrand 10) ;((?100), 10) $ (? 1 2 3) NB. boxed message
+ serialized=. serialize goodmsg                          NB. this is just 3!:1
+ env =. <.(7!:5 < 'serialized')                            NB. note 7!:5 returns a float
+ zmq_send publisher;'type';(sockopt 'sndmore') NB. message header
+ zmq_send publisher; (3 ic env);0                    NB. buffer size message
+ zmq_send publisher;'array';(sockopt 'sndmore') NB. message header
+ zmq_send publisher; serialized ;0                     NB. send buffer
+ 6!:3 (1.5)                                                         NB. pause 1.5 sec
+ smoutput 'sent message of ', (": env), ' bytes'  NB. talk about what was sent
 end.
-zmq_close publisher
+zmq_close publisher                                          NB. cleanup
 zmq_ctx_destroy ctx
 )
 
 tickerplant''
+

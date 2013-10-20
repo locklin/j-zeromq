@@ -20,40 +20,15 @@ NB. TBD, if needed
 NB. struct buffer allocator? 
 NB. most of the details of sending things via zeromq is best done within zmq
 
-NB. for use in envelopes; telling what to allocate, what kind, and what shape
-arraykind =: 3 : 0
- <. (7!:5 <'y'),(3!:0 y), ($ y) NB. need the floor, as 7!:5 returns a float... weird
-)
 
-
-NB. this gets the data over the wire for arrays
+NB. thanks to Pascal for pointing these out
+NB. 3!:3 works also
 serialize=: 3 : 0
- kind=. 3!:0 y
- if. kind=2 do.
-    out=. ,y
- elseif. kind=4 do.
-    out=. 3 ic ,y
- elseif. kind=8 do.
-    out=. 2 fc ,y
- elseif. kind=16 do.
- end.
- out
+ 3 (3!:1) y
 )
 
-NB. return the deserialized object; put sk in x position
-deserialize=: 4 : 0
- sk =. (I. 0 i. x) { x NB. remove trailing zeros
- kind=. 1 pick sk
- shape =. }.}.sk
- if. kind=2 do.
-    out=. y
- elseif. kind=4 do.
-    out=. _3 ic y
- elseif. kind=8 do.
-    out=. _2 fc y
- elseif. kind=16 do.
- end.
- shape $ out
+deserialize=: 3 : 0
+ 3!:2 y
 )
 
 
