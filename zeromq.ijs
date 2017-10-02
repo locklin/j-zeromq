@@ -87,7 +87,7 @@ zmq_socket =: 3 : 0
 NB. int zmq_bind (void *s, const char *addr);
 zmq_bind =: 3 : 0
  'sock addr'=.y
- cmd =. ZMQ,' zmq_bind i i *c'
+ cmd =. ZMQ,' zmq_bind i x *c'
  0 pick cmd cd sock;addr
 )
 

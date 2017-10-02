@@ -1,4 +1,4 @@
-load'zeromq.ijs'
+load jpath,'~/src/jstuff/j-zeromq/zeromq.ijs'
 ctz=: zmq_ctx_new''
 NB. need an "allocator" envelope to send the size/type of the array
 allocator =: zmq_socket ctz;(socktype 'sub')

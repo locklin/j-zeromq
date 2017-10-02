@@ -1,5 +1,5 @@
 NB. demo ticker plant, sending random numbers of rows of data.
-load'zeromq.ijs'
+load jpath,'~/src/jstuff/j-zeromq/zeromq.ijs'
 ctx=: zmq_ctx_new''
 publisher =: zmq_socket ctx;(socktype 'pub')
 zmq_bind publisher;'tcp://*:6666'
